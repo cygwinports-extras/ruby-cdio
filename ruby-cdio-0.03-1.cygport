@@ -1,0 +1,24 @@
+inherit ruby
+
+DESCRIPTION="Ruby libcdio/libiso9660 bindings"
+HOMEPAGE="http://rbcdio.rubyforge.org/"
+SRC_URI="mirror://rubyforge/rbcdio/rbcdio-${PV}.tgz"
+SRC_DIR="rbcdio-${PV}"
+
+RDOC_SOURCE="ext lib"
+RDOC_MODULE="Cdio ISO9660 Rubycdio Rubyiso9660"
+
+DIFF_EXCLUDES="Makefile"
+
+src_test() {
+	cd ${B}
+	rake test
+}
+
+src_install() {
+	cd ${B}
+	doruby ext/*/*.so lib/*.rb
+
+	dodir ${RI_SITEDIR}
+	cp -r .rdoc/{Cdio,ISO9660,Ruby*} ${D}${RI_SITEDIR}/
+}
